@@ -1,50 +1,50 @@
-import React, { createContext, useReducer, useEffect } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
+import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import placeholderImage from '../assets/img/placeholder.jpg';
 
-const StarWarsContext = createContext();
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "SET_DATA":
-      return { 
-        ...state, 
-        [action.payload.type]: action.payload.data 
-      };
-
-    case "TOGGLE_FAVORITE":
-      const { id, name, type } = action.payload;
-      const isFavorite = state.favorites.some((fav) => fav.id === id && fav.type === type);
-
-      return {
-        ...state,
-        favorites: isFavorite
-          ? state.favorites.filter((fav) => !(fav.id === id && fav.type === type))
-          : [...state.favorites, { id, name, type }],
-      };
-
-    default:
-      return state;
-  }
+const getImageUrl = (type, uid) => {
+    let categoryPath = '';
+    switch (type) {
+        case 'people': categoryPath = 'characters'; break;
+        case 'vehicles': categoryPath = 'vehicles'; break;
+        case 'planets': categoryPath = 'planets'; break;
+        default: return '';
+    }
+    return `https://github.com/tbone849/star-wars-guide/blob/master/build/assets/img/${categoryPath}/${uid}.jpg?raw=true`;
 };
 
-export const StarWarsProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, { people: [], planets: [], vehicles: [], favorites: [] });
+export const Favorites = () => {
+    const { store } = useGlobalReducer();
 
-  useEffect(() => {
-    const fetchData = async (type) => {
-      try {
-        const response = await fetch(`https://swapi.tech/api/${type}/`);
-        if (!response.ok) throw new Error(`Failed to fetch ${type}`);
-        const data = await response.json();
-        dispatch({ type: "SET_DATA", payload: { type, data: data.results } });
-      } catch (error) {
-        console.error(`Error fetching ${type}:`, error);
-      }
-    };
+    if (store.favoritos.length === 0) {
+        return <div className="container mt-5 text-center text-secondary">No tienes favoritos aún.</div>;
+    }
 
-    ["people", "planets", "vehicles"].forEach((type) => fetchData(type));
-  }, []);
-
-  return <StarWarsContext.Provider value={{ state, dispatch }}>{children}</StarWarsContext.Provider>;
+    return (
+        <div className="container mt-5">
+            <h2 className="mb-4 text-purple">Tus Favoritos</h2>
+            <div className="row">
+                {store.favoritos.map(fav => (
+                    <div className="col-md-4 mb-4" key={fav.uid + fav.type}>
+                        <div className="card">
+                            <img
+                                src={getImageUrl(fav.type, fav.uid)}
+                                className="card-img-top"
+                                alt={fav.name}
+                                onError={e => { e.target.onerror = null; e.target.src = placeholderImage; }}
+                                style={{ height: "200px", objectFit: "cover" }}
+                            />
+                            <div className="card-body">
+                                <h5 className="card-title">{fav.name}</h5>
+                                <Link to={`/${fav.type}/${fav.uid}`} className="btn btn-purple">
+                                    Ver detalle
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
 };
-
-export const useStarWarsContext = () => React.useContext(StarWarsContext);

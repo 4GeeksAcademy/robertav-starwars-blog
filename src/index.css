@@ -1,0 +1,129 @@
+body {
+    background-color: #1a1a1a; 
+    color: #f0f0f0; 
+    font-family: Arial, sans-serif;
+    margin: 0; 
+    padding: 0; 
+    min-height: 100vh;
+    display: flex; 
+    flex-direction: column;
+}
+
+#root > div {
+    max-width: 99%; 
+    margin: 0 auto; 
+    background-color: #292929; 
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    padding: 20px 15px; 
+    flex-grow: 1;
+}
+
+.navbar {
+    background-color: #333333 !important; 
+    border-bottom: 1px solid #660066; 
+}
+
+.navbar-brand {
+    color: #ff3366 !important; 
+    font-weight: bold; 
+}
+
+.footer {
+    background-color: #333333 !important; 
+    border-top: 1px solid #660066; 
+    color: #cccccc !important; 
+    padding: 15px 0; 
+    text-align: center; 
+}
+
+.footer a {
+    color: #ff3366 !important; 
+}
+
+.btn-warning {
+    background-color: #ff3366 !important; 
+    border-color: #ff3366 !important;
+    color: #ffffff !important;
+}
+
+.btn-warning:hover {
+    background-color: #cc0033 !important; 
+    border-color: #cc0033 !important;
+}
+
+.btn-outline-warning {
+    color: #ff3366 !important; 
+    border-color: #ff3366 !important;
+    background-color: transparent; 
+}
+
+.btn-outline-warning:hover {
+    background-color: #ff3366 !important; 
+    color: #ffffff !important; 
+}
+
+.btn-danger {
+    background-color: #cc0033 !important; 
+    border-color: #cc0033 !important;
+    color: #ffffff !important;
+}
+
+.btn-purple {
+    background-color: #ff3366 !important;
+    color: #fff !important;
+    border: none !important;
+}
+.btn-purple:hover {
+    background-color: #ff3366 !important;
+    color: #fff !important;
+}
+.text-purple {
+    color: #ff3366 !important;
+}
+
+.card {
+    background-color: #3a3a3a; 
+    color: #f0f0f0; 
+    border: 1px solid #555555; 
+    width: 18rem; 
+    flex-shrink: 0; 
+    margin: 0.5rem;
+}
+
+.card-title {
+    color: #ff3366; 
+}
+
+.card-img-top {
+    height: 200px; 
+    object-fit: cover; 
+}
+
+.dropdown-menu {
+    background-color: #3a3a3a !important; 
+    border: 1px solid #660066 !important;
+}
+
+.dropdown-item {
+    color: #f0f0f0 !important; 
+}
+
+.dropdown-item:hover {
+    background-color: #660099 !important; 
+}
+
+.badge {
+    background-color: #9933cc !important; 
+    color: #ffffff !important;
+}
+
+
+h2.text-warning {
+    color: #ff3366 !important; 
+    margin-bottom: 1rem; 
+}
