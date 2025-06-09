@@ -1,0 +1,10 @@
+/* src/index.css or src/App.css */
+
+/* Example: add some global padding or margin reset */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* You can add custom tweaks here */

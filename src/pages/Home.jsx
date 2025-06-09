@@ -1,16 +1,47 @@
-import rigoImageUrl from "../assets/img/rigo-baby.jpg";
-import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import React, { useContext } from "react";
+import { GlobalContext } from "../context/GlobalStore";
+import CardItem from "../components/CardItem";
 
-export const Home = () => {
+const Home = () => {
+  const { state } = useContext(GlobalContext);
 
-  const {store, dispatch} =useGlobalReducer()
+  if (state.people.length === 0) return <div className="container mt-4">Loading...</div>;
 
-	return (
-		<div className="text-center mt-5">
-			<h1>Hello Rigo!!</h1>
-			<p>
-				<img src={rigoImageUrl} />
-			</p>
-		</div>
-	);
-}; 
+  return (
+    <div className="container mt-4">
+      <h1>Star Wars Catalog</h1>
+
+      {/* People */}
+      <section className="mb-5">
+        <h2>People</h2>
+        <div className="d-flex flex-wrap gap-3">
+          {state.people.map((person) => (
+            <CardItem key={person.uid} item={person} category="characters" />
+          ))}
+        </div>
+      </section>
+
+      {/* Planets */}
+      <section className="mb-5">
+        <h2>Planets</h2>
+        <div className="d-flex flex-wrap gap-3">
+          {state.planets.map((planet) => (
+            <CardItem key={planet.uid} item={planet} category="planets" />
+          ))}
+        </div>
+      </section>
+
+      {/* Vehicles */}
+      <section className="mb-5">
+        <h2>Vehicles</h2>
+        <div className="d-flex flex-wrap gap-3">
+          {state.vehicles.map((vehicle) => (
+            <CardItem key={vehicle.uid} item={vehicle} category="vehicles" />
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default Home;
