@@ -123,6 +123,25 @@ html, body, #root {
   margin-bottom: 1rem;
 }
 
+/* Navbar favorites button text color */
+.navbar .btn-purple {
+  color: #f8f9fa; /* light text so it stands out on dark navbar */
+}
+
+/* Fix dropdown menu alignment inside navbar */
+.navbar .dropdown-menu.dropdown-menu-end {
+  right: 0 !important;
+  left: auto !important;
+  margin-top: 0.25rem;
+  min-width: 250px;
+  max-height: 350px;
+  overflow-y: auto;
+  z-index: 1050;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  background-color: #fff;
+  border-radius: 6px;
+}
+
 /* Responsive adjustments */
 @media (max-width: 575.98px) {
   .card-img-top {
