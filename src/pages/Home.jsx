@@ -6,7 +6,7 @@ import Vehicles from "../pages/Vehicles";
 export const Home = () => {
   return (
     <div className="container">
-      <h1>Star Wars Universe</h1>
+      <h1>Star Wars List</h1>
       <People />
       <Planets />
       <Vehicles />
