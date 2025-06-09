@@ -1,4 +1,4 @@
-/* Prevent horizontal scroll globally */
+
 html, body, #root {
   overflow-x: hidden;
   margin: 0;
@@ -8,7 +8,7 @@ html, body, #root {
   background-color: #f9f9f9;
 }
 
-/* Container padding to prevent content flush against edges */
+
 .container {
   padding-left: 1rem !important;
   padding-right: 1rem !important;
@@ -16,14 +16,14 @@ html, body, #root {
   margin: 0 auto;
 }
 
-/* Center the rows and prevent overflow */
+
 .row.mx-auto {
   margin-left: auto !important;
   margin-right: auto !important;
-  max-width: 1200px; /* Optional max width for large screens */
+  max-width: 1200px; 
 }
 
-/* Card styling */
+
 .card {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
@@ -39,7 +39,7 @@ html, body, #root {
   box-shadow: 0 8px 15px rgb(0 0 0 / 0.15);
 }
 
-/* Card image */
+
 .card-img-top {
   width: 100% !important;
   height: 180px;
@@ -48,7 +48,7 @@ html, body, #root {
   border-top-right-radius: 10px;
 }
 
-/* Card body */
+
 .card-body {
   display: flex;
   flex-direction: column;
@@ -56,15 +56,15 @@ html, body, #root {
   flex-grow: 1;
 }
 
-/* Card title */
+
 .card-title {
   font-weight: 700;
   font-size: 1.25rem;
-  color: #4b0082; /* Purple shade */
+  color: #4b0082; 
   margin-bottom: 0.75rem;
 }
 
-/* Buttons container in card footer */
+
 .card-body > .mt-auto {
   display: flex;
   justify-content: space-between;
@@ -72,7 +72,7 @@ html, body, #root {
   margin-top: auto;
 }
 
-/* Details button: purple with white text and subtle shadow for contrast */
+
 .btn-purple {
   background-color: #6a0dad;
   color: white;
@@ -92,7 +92,7 @@ html, body, #root {
   text-decoration: none;
 }
 
-/* Favorite button styles */
+
 .btn-outline-danger {
   color: #dc3545;
   border-color: #dc3545;
@@ -115,7 +115,7 @@ html, body, #root {
   border-radius: 6px;
 }
 
-/* Heading styles */
+
 .text-purple {
   color: #6a0dad;
   font-weight: 700;
@@ -123,12 +123,12 @@ html, body, #root {
   margin-bottom: 1rem;
 }
 
-/* Navbar favorites button text color */
+
 .navbar .btn-purple {
-  color: #f8f9fa; /* light text so it stands out on dark navbar */
+  color: #f8f9fa; 
 }
 
-/* Fix dropdown menu alignment inside navbar */
+
 .navbar .dropdown-menu.dropdown-menu-end {
   right: 0 !important;
   left: auto !important;
@@ -142,7 +142,7 @@ html, body, #root {
   border-radius: 6px;
 }
 
-/* Responsive adjustments */
+
 @media (max-width: 575.98px) {
   .card-img-top {
     height: 150px;
