@@ -1,65 +1,48 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Card, Button } from "react-bootstrap";
 
 const Details = () => {
-  const { category, uid } = useParams();
+  const { type, id } = useParams();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-
-  // Fix category for images: people → characters
-  const imageCategory = category === "people" ? "characters" : category;
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchDetails = async () => {
-      setLoading(true);
       try {
-        const res = await fetch(`https://www.swapi.tech/api/${category}/${uid}`);
-        const json = await res.json();
-        if (json.result && json.result.properties) {
-          setData(json.result.properties);
-        } else {
-          setData(null);
-        }
-      } catch (error) {
-        console.error(error);
-        setData(null);
+        const response = await fetch(`https://swapi.tech/api/${type}/${id}/`);
+        if (!response.ok) throw new Error(`Failed to fetch ${type} details`);
+        const result = await response.json();
+        setData(result);
+      } catch (err) {
+        setError(err.message);
       } finally {
         setLoading(false);
       }
     };
-    fetchDetails();
-  }, [category, uid]);
 
-  if (loading) return <div className="container mt-4">Loading...</div>;
-  if (!data) return <div className="container mt-4">Not found.</div>;
+    fetchDetails();
+  }, [type, id]);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="container mt-4">
-      <h2>{data.name}</h2>
-      <div className="row">
-        <div className="col-md-4">
-          <img
-            src={`https://starwars-visualguide.com/assets/img/${imageCategory}/${uid}.jpg`}
-            alt={data.name}
-            className="img-fluid rounded"
-            onError={(e) =>
-              (e.target.src = "https://starwars-visualguide.com/assets/img/big-placeholder.jpg")
-            }
-          />
-        </div>
-        <div className="col-md-8">
-          <table className="table table-bordered table-striped">
-            <tbody>
-              {Object.entries(data).map(([key, val]) => (
-                <tr key={key}>
-                  <th>{key.replace(/_/g, " ").toUpperCase()}</th>
-                  <td>{val.toString()}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+    <div className="container">
+      {data ? (
+        <Card>
+          <Card.Img variant="top" src={`https://starwars-visualguide.com/assets/img/${type}/${id}.jpg`} />
+          <Card.Body>
+            <Card.Title>{data.name}</Card.Title>
+            <Card.Text>
+              <strong>Details:</strong> {JSON.stringify(data, null, 2)}
+            </Card.Text>
+          </Card.Body>
+        </Card>
+      ) : (
+        <p>No data available</p>
+      )}
     </div>
   );
 };
