@@ -7,6 +7,7 @@ from .utils import APIException
 from .admin import setup_admin
 
 app = Flask(__name__)
+app.secret_key = os.getenv("SECRET_KEY", "super-secret-key")  # Needed for admin session support
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///starwars.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -23,6 +24,8 @@ def handle_invalid_usage(error):
 def sitemap():
     return jsonify({"message": "Welcome to StarWars Blog API"})
 
+# ------------------- CHARACTERS ------------------- #
+
 @app.route('/people', methods=['GET'])
 def get_people():
     characters = Character.query.all()
@@ -33,6 +36,33 @@ def get_person(people_id):
     character = Character.query.get_or_404(people_id)
     return jsonify(character.serialize()), 200
 
+@app.route('/people', methods=['POST'])
+def create_character():
+    data = request.json
+    new_char = Character(name=data['name'], gender=data.get('gender'), birth_year=data.get('birth_year'))
+    db.session.add(new_char)
+    db.session.commit()
+    return jsonify(new_char.serialize()), 201
+
+@app.route('/people/<int:people_id>', methods=['PUT'])
+def update_character(people_id):
+    data = request.json
+    character = Character.query.get_or_404(people_id)
+    character.name = data.get('name', character.name)
+    character.gender = data.get('gender', character.gender)
+    character.birth_year = data.get('birth_year', character.birth_year)
+    db.session.commit()
+    return jsonify(character.serialize()), 200
+
+@app.route('/people/<int:people_id>', methods=['DELETE'])
+def delete_character(people_id):
+    character = Character.query.get_or_404(people_id)
+    db.session.delete(character)
+    db.session.commit()
+    return '', 204
+
+# ------------------- PLANETS ------------------- #
+
 @app.route('/planets', methods=['GET'])
 def get_planets():
     planets = Planet.query.all()
@@ -42,6 +72,33 @@ def get_planets():
 def get_planet(planet_id):
     planet = Planet.query.get_or_404(planet_id)
     return jsonify(planet.serialize()), 200
+
+@app.route('/planets', methods=['POST'])
+def create_planet():
+    data = request.json
+    new_planet = Planet(name=data['name'], population=data.get('population'), climate=data.get('climate'))
+    db.session.add(new_planet)
+    db.session.commit()
+    return jsonify(new_planet.serialize()), 201
+
+@app.route('/planets/<int:planet_id>', methods=['PUT'])
+def update_planet(planet_id):
+    data = request.json
+    planet = Planet.query.get_or_404(planet_id)
+    planet.name = data.get('name', planet.name)
+    planet.population = data.get('population', planet.population)
+    planet.climate = data.get('climate', planet.climate)
+    db.session.commit()
+    return jsonify(planet.serialize()), 200
+
+@app.route('/planets/<int:planet_id>', methods=['DELETE'])
+def delete_planet(planet_id):
+    planet = Planet.query.get_or_404(planet_id)
+    db.session.delete(planet)
+    db.session.commit()
+    return '', 204
+
+# ------------------- USERS & FAVORITES ------------------- #
 
 @app.route('/users', methods=['GET'])
 def get_users():
